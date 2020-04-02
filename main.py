@@ -104,13 +104,13 @@ class Operation:
 
     def delete_item(self):
         if self.shopping_history:
-            for item in self.shopping_history:
+            for item in sorted(self.shopping_history):
                 print("\nBarcode: " + str(self.shopping_history[item]['Barcode']))
                 print("Item: " + item)
                 print("Quantity: " + str(self.shopping_history[item]['Quantity']))
                 print("Total Amount: " + str(self.shopping_history[item]['Total']))
 
-            removed_item = int(input("\nPlease Enter BARCODE Of Item You Want To Remove: "))
+            removed_item = int(input("\nPlease Enter BARCODE Of Item You Want To Remove or 0 To Return To MAIN MENU: "))
             for item in list(self.shopping_history):
                 if removed_item == self.shopping_history[item]['Barcode']:
                     self.gross_total -= self.shopping_history[item]['Total']
@@ -128,8 +128,11 @@ class Operation:
                         else:
                             choice = int(input("\nPlease Enter A Valid Input. Press 1 or 2: "))
 
+                elif removed_item == 0:
+                    self.menu()
+
                 else:
-                    if len(item) <= len(self.shopping_history):
+                    if len(item) != len(self.shopping_history):
                         continue
                     print("Item Not Found.\n")
                     choice = int(input("Press 1 To Try Again or 2 For Main Menu: "))
@@ -162,7 +165,7 @@ class Operation:
             print("\nGross Total:    " + str(self.gross_total))
             print("Total Discount: " + str(self.total_discount))
             print("Net Total:      " + str(self.net_total))
-            view = int(input("\nPress 1 To Checkout Or 2 To Return To The Main Menu Or: "))
+            view = int(input("\nPress 1 To Checkout Or 2 To Return To The Main Menu: "))
             while view:
                 if view == 1:
                     self.checkout()
